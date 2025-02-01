@@ -1,0 +1,14 @@
+{
+    "name": "sourcetoad/assessment",
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Luis Manuel Carballo Gomoez",
+            "email": "luism.carballog@gmail.com"
+        }
+    ]
+}
