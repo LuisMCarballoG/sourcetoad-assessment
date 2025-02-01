@@ -2,8 +2,10 @@
 
 namespace App\Controllers;
 
-class MenuController {
-    private function menuOptions(): void {
+class MenuController
+{
+    private function menuOptions(): void
+    {
         echo "\n\n\n";
         echo "------------------- W E L C O M E -------------------\n";
         echo "1. Printing Key-Value Pairs\n";
@@ -12,7 +14,8 @@ class MenuController {
         echo "4. Exit\n";
     }
 
-    public function run(): void {
+    public function run(): void
+    {
         do {
             $this->menuOptions();
             $option = readline("Type option: ");
