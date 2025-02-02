@@ -8,16 +8,8 @@ use App\Services\KeyValueFormatterService;
 
 class MenuController
 {
-
-    public function __construct(
-
-
-    /**
-     * @param ServiceContainer $container
-     */
-    public function __construct(
-        private ServiceContainer $container,
-    ) {
+    public function __construct(private ServiceContainer $container)
+    {
     }
 
     /**
@@ -49,7 +41,10 @@ class MenuController
      */
     private function getOptionFromInput(): string
     {
-        return trim(readline("Type option: "));
+        $input = readline("Type option: ");
+        return trim(
+            is_string($input) ? $input : '',
+        );
     }
 
     /**
@@ -63,25 +58,14 @@ class MenuController
     }
 
     /**
-     * @return string[]
-     */
-    private function getCommandHandlers(): array
-    {
-        return [
-            '1' => 'handlePrinting',
-            '2' => 'handleSorting',
-            '3' => 'handleShoppingCart',
-            '4' => 'handleExit',
-        ];
-    }
-
-    /**
      * @return void
      */
     private function handlePrinting(): void
     {
         $this->printSectionHeader('Printing');
+        /** @var JsonFileLoaderService $loader */
         $loader = $this->container->get(JsonFileLoaderService::class);
+        /** @var KeyValueFormatterService $formatter */
         $formatter = $this->container->get(KeyValueFormatterService::class);
         echo $formatter->format($loader->getData());
     }
@@ -128,12 +112,22 @@ class MenuController
         do {
             $this->displayMenu();
             $option = $this->getOptionFromInput();
-            $handlers = $this->getCommandHandlers();
 
-            if (isset($handlers[$option])) {
-                $this->{$handlers[$option]}();
-            } else {
-                $this->handleInvalidOption();
+            switch ($option) {
+                case '1':
+                    $this->handlePrinting();
+                    break;
+                case '2':
+                    $this->handleSorting();
+                    break;
+                case '3':
+                    $this->handleShoppingCart();
+                    break;
+                case '4':
+                    $this->handleExit();
+                    break 2;
+                default:
+                    $this->handleInvalidOption();
             }
         } while ($option !== '4');
     }

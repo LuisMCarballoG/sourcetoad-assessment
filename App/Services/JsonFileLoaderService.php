@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
-class JsonFileLoaderService
+use App\Services\Interfaces\JsonFileLoaderInterface;
+
+class JsonFileLoaderService implements JsonFileLoaderInterface
 {
     /**
-     * @var string[]
+     * @var array<string, mixed>
      */
     private array $data;
 
@@ -47,7 +49,7 @@ class JsonFileLoaderService
     }
 
     /**
-     * @return string[]
+     * @return array<string, mixed>
      */
     public function getData(): array
     {
