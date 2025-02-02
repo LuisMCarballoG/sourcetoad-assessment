@@ -92,6 +92,28 @@
     ]
   },
   {
+    "guest_id": 10000111,
+    "guest_type": "crew",
+    "first_name": "Bob Jr ",
+    "middle_name": "Charles",
+    "last_name": "Hemingway",
+    "gender": "M",
+    "guest_booking": [
+      {
+        "booking_number": 100000111,
+        "room_no": "B0092",
+        "is_checked_in": true
+      }
+    ],
+    "guest_account": [
+      {
+        "account_id": 10000521,
+        "account_limit": 300,
+        "allow_charges": true
+      }
+    ]
+  },
+  {
     "guest_id": 10000116,
     "guest_type": "crew",
     "first_name": "Ismael ",
