@@ -9,6 +9,7 @@ use App\Services\CartPrinterService;
 use App\Services\CartService;
 use App\Services\JsonFileLoaderService;
 use App\Services\KeyValueFormatterService;
+use App\Services\SortService;
 
 $container = new ServiceContainer();
 $container->register(
@@ -20,6 +21,11 @@ $container->register(
     KeyValueFormatterService::class,
     /** @return KeyValueFormatterService */
     fn () => new KeyValueFormatterService(),
+);
+$container->register(
+    SortService::class,
+    /** @return SortService */
+    fn () => new SortService(),
 );
 $container->register(CartService::class, function () use ($container) {
     /** @return CartService */

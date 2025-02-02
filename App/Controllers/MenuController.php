@@ -6,6 +6,7 @@ use App\Infrastructure\ServiceContainer;
 use App\Services\CartService;
 use App\Services\JsonFileLoaderService;
 use App\Services\KeyValueFormatterService;
+use App\Services\SortService;
 
 class MenuController
 {
@@ -81,6 +82,14 @@ class MenuController
     private function handleSorting(): void
     {
         $this->printSectionHeader('Sorting');
+        /** @var JsonFileLoaderService $loader */
+        $loader = $this->container->get(JsonFileLoaderService::class);
+        /** @var SortService $sorter */
+        $sorter = $this->container->get(SortService::class);
+        /** @var KeyValueFormatterService $formatter */
+        $formatter = $this->container->get(KeyValueFormatterService::class);
+        $data = $loader->getData();
+        echo $formatter->format($sorter->sortData($data, ['first_name', 'account_id']));
     }
 
     /**
