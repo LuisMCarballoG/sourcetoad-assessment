@@ -11,11 +11,22 @@ use App\Services\SortService;
 class MenuController
 {
     /**
+     * @var \Closure[]
+     */
+    private array $menuHandlers;
+
+    /**
      * @param ServiceContainer $container
      */
     public function __construct(
         private ServiceContainer $container,
     ) {
+        $this->menuHandlers = [
+            '1' => fn () => $this->handlePrinting(),
+            '2' => fn () => $this->handleSorting(),
+            '3' => fn () => $this->handleShoppingCart(),
+            '4' => fn () => $this->handleExit(),
+        ];
     }
 
     /**
@@ -129,21 +140,10 @@ class MenuController
             $this->displayMenu();
             $option = $this->getOptionFromInput();
 
-            switch ($option) {
-                case '1':
-                    $this->handlePrinting();
-                    break;
-                case '2':
-                    $this->handleSorting();
-                    break;
-                case '3':
-                    $this->handleShoppingCart();
-                    break;
-                case '4':
-                    $this->handleExit();
-                    break 2;
-                default:
-                    $this->handleInvalidOption();
+            if (isset($this->menuHandlers[$option])) {
+                $this->menuHandlers[$option]();
+            } else {
+                $this->handleInvalidOption();
             }
         } while ($option !== '4');
     }

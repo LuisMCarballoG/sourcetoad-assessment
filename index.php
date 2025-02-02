@@ -27,11 +27,21 @@ $container->register(
     /** @return SortService */
     fn () => new SortService(),
 );
+$container->register(
+    CartCalculatorService::class,
+    /** @return CartCalculatorService */
+    fn () => new CartCalculatorService(),
+);
+$container->register(
+    CartPrinterService::class,
+    /** @return CartPrinterService */
+    fn () => new CartPrinterService(),
+);
 $container->register(CartService::class, function () use ($container) {
     /** @return CartService */
     return new CartService(
-        new CartCalculatorService(),
-        new CartPrinterService(),
+        $container->get(CartCalculatorService::class),
+        $container->get(CartPrinterService::class),
     );
 });
 

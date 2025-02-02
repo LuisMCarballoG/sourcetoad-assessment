@@ -9,7 +9,7 @@ class SortService
      * @param string[] $keys
      * @return list<mixed>
      */
-    public function sortData(array &$array, $keys): array
+    public function sortData(array $array, array $keys): array
     {
         $comparator = function ($a, $b) use ($keys) {
             foreach ($keys as $key) {
