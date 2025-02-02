@@ -3,13 +3,18 @@
 namespace App\Controllers;
 
 use App\Infrastructure\ServiceContainer;
+use App\Services\CartService;
 use App\Services\JsonFileLoaderService;
 use App\Services\KeyValueFormatterService;
 
 class MenuController
 {
-    public function __construct(private ServiceContainer $container)
-    {
+    /**
+     * @param ServiceContainer $container
+     */
+    public function __construct(
+        private ServiceContainer $container,
+    ) {
     }
 
     /**
@@ -84,6 +89,8 @@ class MenuController
     private function handleShoppingCart(): void
     {
         $this->printSectionHeader('Shopping');
+        $cartService = $this->container->get(CartService::class);
+        $cartService->processOrder();
     }
 
     /**
