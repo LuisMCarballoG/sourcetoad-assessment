@@ -2,8 +2,27 @@
 
 namespace App\Controllers;
 
+use App\Infrastructure\ServiceContainer;
+use App\Services\JsonFileLoaderService;
+use App\Services\KeyValueFormatterService;
+
 class MenuController
 {
+
+    public function __construct(
+
+
+    /**
+     * @param ServiceContainer $container
+     */
+    public function __construct(
+        private ServiceContainer $container,
+    ) {
+    }
+
+    /**
+     * @return string[]
+     */
     private function getMenuOptions(): array
     {
         return [
@@ -14,6 +33,9 @@ class MenuController
         ];
     }
 
+    /**
+     * @return void
+     */
     private function displayMenu(): void
     {
         echo "\n\n\n------------------- W E L C O M E -------------------\n";
@@ -22,17 +44,27 @@ class MenuController
         }
     }
 
+    /**
+     * @return string
+     */
     private function getOptionFromInput(): string
     {
         return trim(readline("Type option: "));
     }
 
+    /**
+     * @param string $section
+     * @return void
+     */
     private function printSectionHeader(string $section): void
     {
         $formattedSection = str_replace(' ', '   ', $section);
         echo "\n********* " . strtoupper($formattedSection) . " *********\n";
     }
 
+    /**
+     * @return string[]
+     */
     private function getCommandHandlers(): array
     {
         return [
@@ -43,33 +75,54 @@ class MenuController
         ];
     }
 
+    /**
+     * @return void
+     */
     private function handlePrinting(): void
     {
         $this->printSectionHeader('Printing');
+        $loader = $this->container->get(JsonFileLoaderService::class);
+        $formatter = $this->container->get(KeyValueFormatterService::class);
+        echo $formatter->format($loader->getData());
     }
 
+    /**
+     * @return void
+     */
     private function handleSorting(): void
     {
         $this->printSectionHeader('Sorting');
     }
 
+    /**
+     * @return void
+     */
     private function handleShoppingCart(): void
     {
         $this->printSectionHeader('Shopping');
     }
 
+    /**
+     * @return void
+     */
     private function handleExit(): void
     {
         $this->printSectionHeader('CHAO');
         echo "Exiting...\n";
     }
 
+    /**
+     * @return void
+     */
     private function handleInvalidOption(): void
     {
         $this->printSectionHeader('¡¡ W O O P S !!');
         echo "Invalid option, please try again.\n";
     }
 
+    /**
+     * @return void
+     */
     public function run(): void
     {
         do {
